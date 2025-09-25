@@ -149,7 +149,6 @@ async def getschedule(interaction:discord.Interaction, day:str):
 				await interaction.response.send_message("Your schedule for today is: {} at {}." .format(mondaysubject1,mondaytime1))
 			else:
 				await interaction.response.send_message("You either don't have a schedule for Monday or you forgot to input.")
-else:
-			await interaction.response.send_message("please input a valid day.")
-
+		else: 
+			await interaction.response.send_message("insert generic error message")				
 bot.run(TOKEN)
