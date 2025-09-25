@@ -27,7 +27,7 @@ async def on_ready():
 
 @bot.tree.command(name="resetschedule",description="reset or initialize schedule") #initialize the json file (database)
 async def resetschedule(interaction:discord.Interaction):
-	with open('schedule.json', 'w+') as file: #loading the json file as a rewriteable file
+	with open('schedule.json', 'r+') as file: #loading the json file as a rewriteable file
 		initialize=json.load(file) 
 		initialize['mondaysubject1']="0" #inputting the keys (mondaysubject1 = "0")
 		initialize['mondaytime1']=0 # mondaytime1 = 0
@@ -43,7 +43,8 @@ async def resetschedule(interaction:discord.Interaction):
 		initialize['mondaytime6']=0
 		initialize['mondaysubject7']="0"
 		initialize['mondaytime7']=0
-		json.dump(initialize,file)
+		with open('schedule.json', 'w') as file:
+			json.dump(initialize,file)
 	await interaction.response.send_message("initialized.") #discord sends a response 
 
 
