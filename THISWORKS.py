@@ -18,7 +18,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 initialized = 0
 
 @bot.event
-async def on_ready():
+async def on_ready(): #vsc terminal, checks if the commands are ready
     print("Commands loading...")
     await bot.tree.sync()
     print("Commands are ready.")
@@ -31,9 +31,9 @@ async def reset(interaction:discord.Interaction):
 		await interaction.response.send_message("initialized.")
 
 
-@bot.tree.command(name="inputschedule", description="input schedule")
+@bot.tree.command(name="inputschedule", description="input schedule") #inputschedule command
 async def inputsched(interaction:discord.Interaction, subject:str, day: str, time:int):
-	if day=="monday" or day== "mon":
+	if day=="monday" or day== "mon": #checks for the day input
 		with open('schedule.json', 'r+') as file:
 			data=json.load(file)
 			if "mondaytime1" not in data:
