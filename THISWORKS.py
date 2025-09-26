@@ -25,7 +25,7 @@ async def on_ready(): #vsc terminal, checks if the commands are ready
 
 @bot.tree.command(name="reset",description="initialize or reset schedule") #initialize the json
 async def reset(interaction:discord.Interaction): 
-	with open ('schedule.json', 'w+') as file:
+	with open ('schedule.json', 'w+') as file: #even if without the json file in directory it creates one
 		emptyjsonobject={}
 		json.dump(emptyjsonobject,file)
 		await interaction.response.send_message("initialized.")
