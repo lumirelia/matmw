@@ -13,7 +13,7 @@ intents.typing = True
 intents.presences = True
 intents.messages=True
 
-bot = commands.Bot(command_prefix="scriminfo", intents=intents, caseinsensitive=True)
+bot = commands.Bot(command_prefix='matmwbot', intents=intents, caseinsensitive=True)
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -25,27 +25,12 @@ async def on_ready():
     await bot.tree.sync()
     print("Commands are ready.") #if commands are initialized it prints in the terminal
 
-@bot.tree.command(name="resetschedule",description="reset or initialize schedule") #initialize the json file (database)
-async def resetschedule(interaction:discord.Interaction):
-	with open('schedule.json', 'r+') as file: #loading the json file as a rewriteable file
-		initialize=json.load(file) 
-		initialize['mondaysubject1']="0" #inputting the keys (mondaysubject1 = "0")
-		initialize['mondaytime1']=0 # mondaytime1 = 0
-		initialize['mondaysubject2']="0"
-		initialize['mondaytime2']=0
-		initialize['mondaysubject3']="0"
-		initialize['mondaytime3']=0
-		initialize['mondaysubject4']="0"
-		initialize['mondaytime4']=0
-		initialize['mondaysubject5']="0"
-		initialize['mondaytime5']=0
-		initialize['mondaysubject6']="0"
-		initialize['mondaytime6']=0
-		initialize['mondaysubject7']="0"
-		initialize['mondaytime7']=0
-		with open('schedule.json', 'w') as file:
-			json.dump(initialize,file)
-	await interaction.response.send_message("initialized.") #discord sends a response 
+@bot.tree.command(name="reset",description="initialize or reset schedule") #initialize the json or empties it
+async def reset(interaction:discord.Interaction): 
+	with open ('schedule.json', 'w+') as file:
+		emptyjsonobject={}
+		json.dump(emptyjsonobject,file)
+		await interaction.response.send_message("initialized.") 
 
 
 @bot.tree.command(name="inputschedule", description="input schedule")
@@ -117,40 +102,84 @@ async def inputsched(interaction:discord.Interaction, subject:str, day: str, tim
 		await interaction.response.send_message("error, please try again.") #wrong input
 
 @bot.tree.command(name="getschedule", description="get schedule")
-async def getschedule(interaction:discord.Interaction, day:str): #define the discord command
-	with open('schedule.json','r') as file: #opens the file and reads it
+async def getschedule(interaction:discord.Interaction, day:str):
+	with open('schedule.json','r') as file:
 		data=json.load(file)
-		mondaysubject1=data["mondaysubject1"]
-		mondaytime1=data["mondaytime1"]
-		mondaysubject2=data["mondaysubject2"]
-		mondaytime2=data["mondaytime2"]
-		mondaysubject3=data["mondaysubject3"]
-		mondaytime3=data["mondaytime3"]
-		mondaysubject4=data["mondaysubject4"]
-		mondaytime4=data["mondaytime4"]
-		mondaysubject5=data["mondaysubject5"]
-		mondaytime5=data["mondaytime5"]
-		mondaysubject6=data["mondaysubject6"]
-		mondaytime6=data["mondaytime6"]
-		mondaysubject7=data["mondaysubject7"]
-		mondaytime7=data["mondaytime7"]
+		sched=len(data) #check how many keys are in the json
 		if day=="monday" or "mon":
-			if "mondaysubject7" in file: #from here on down it just checks the values, i haven't fixed the conditions yet but it should be able to read the inputs
+			if sched==14: #14 because 7 subjects with 7 different times
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
+				mondaysubject2=data["mondaysubject2"]
+				mondaytime2=data["mondaytime2"]
+				mondaysubject3=data["mondaysubject3"]
+				mondaytime3=data["mondaytime3"]
+				mondaysubject4=data["mondaysubject4"]
+				mondaytime4=data["mondaytime4"]
+				mondaysubject5=data["mondaysubject5"]
+				mondaytime5=data["mondaytime5"]
+				mondaysubject6=data["mondaysubject6"]
+				mondaytime6=data["mondaytime6"]
+				mondaysubject7=data["mondaysubject7"]
+				mondaytime7=data["mondaytime7"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}, {} at {}, {} at {}, {} at {}, {} at {}, {} at {}, and {} at {}." .format(mondaysubject1,mondaytime1,mondaysubject2,mondaytime2,mondaysubject3,mondaytime3,mondaysubject4,mondaytime4,mondaysubject5,mondaytime5,mondaysubject6,mondaytime6,mondaysubject7,mondaytime7))
-			elif "mondaysubject7" not in file:
+			elif sched==12: #12, 6 subjects with 6 different times
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
+				mondaysubject2=data["mondaysubject2"]
+				mondaytime2=data["mondaytime2"]
+				mondaysubject3=data["mondaysubject3"]
+				mondaytime3=data["mondaytime3"]
+				mondaysubject4=data["mondaysubject4"]
+				mondaytime4=data["mondaytime4"]
+				mondaysubject5=data["mondaysubject5"]
+				mondaytime5=data["mondaytime5"]
+				mondaysubject6=data["mondaysubject6"]
+				mondaytime6=data["mondaytime6"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}, {} at {}, {} at {}, {} at {}, {} at {}, and {} at {}." .format(mondaysubject1,mondaytime1,mondaysubject2,mondaytime2,mondaysubject3,mondaytime3,mondaysubject4,mondaytime4,mondaysubject5,mondaytime5,mondaysubject6,mondaytime6))
-			elif "mondaysubject6" not in file:
+			elif sched==10:
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
+				mondaysubject2=data["mondaysubject2"]
+				mondaytime2=data["mondaytime2"]
+				mondaysubject3=data["mondaysubject3"]
+				mondaytime3=data["mondaytime3"]
+				mondaysubject4=data["mondaysubject4"]
+				mondaytime4=data["mondaytime4"]
+				mondaysubject5=data["mondaysubject5"]
+				mondaytime5=data["mondaytime5"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}, {} at {}, {} at {}, {} at {}, and {} at {}." .format(mondaysubject1,mondaytime1,mondaysubject2,mondaytime2,mondaysubject3,mondaytime3,mondaysubject4,mondaytime4,mondaysubject5,mondaytime5))
-			elif "mondaysubject5" not in file:
+			elif sched==8:
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
+				mondaysubject2=data["mondaysubject2"]
+				mondaytime2=data["mondaytime2"]
+				mondaysubject3=data["mondaysubject3"]
+				mondaytime3=data["mondaytime3"]
+				mondaysubject4=data["mondaysubject4"]
+				mondaytime4=data["mondaytime4"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}, {} at {}, {} at {}, and {} at {}." .format(mondaysubject1,mondaytime1,mondaysubject2,mondaytime2,mondaysubject3,mondaytime3,mondaysubject4,mondaytime4))
-			elif "mondaysubject4" not in file:
+			elif sched==6:
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
+				mondaysubject2=data["mondaysubject2"]
+				mondaytime2=data["mondaytime2"]
+				mondaysubject3=data["mondaysubject3"]
+				mondaytime3=data["mondaytime3"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}, {} at {}, and {} at {}." .format(mondaysubject1,mondaytime1,mondaysubject2,mondaytime2,mondaysubject3,mondaytime3))
-			elif "mondaysubject3" not in file:
+			elif sched==4:
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
+				mondaysubject2=data["mondaysubject2"]
+				mondaytime2=data["mondaytime2"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}, and {} at {}." .format(mondaysubject1,mondaytime1,mondaysubject2,mondaytime2))
-			elif "mondaysubject2" not in file:
+			elif sched==2:
+				mondaysubject1=data["mondaysubject1"]
+				mondaytime1=data["mondaytime1"]
 				await interaction.response.send_message("Your schedule for today is: {} at {}." .format(mondaysubject1,mondaytime1))
 			else:
 				await interaction.response.send_message("You either don't have a schedule for Monday or you forgot to input.")
-		else: 
-			await interaction.response.send_message("insert generic error message")				
+		else:
+			await interaction.response.send_message("there's an oopsies that i probably forogt to code")
+
 bot.run(TOKEN)
