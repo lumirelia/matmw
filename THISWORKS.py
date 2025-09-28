@@ -794,6 +794,67 @@ async def getschedule(interaction:discord.Interaction, day:str):
 		else:
 			await interaction.response.send_message("there's an oopsies that i probably forogt to code")
 
+programming="https://www.geeksforgeeks.org/ \n" \ #setting up the responses
+            "https://www.w3schools.com/ \n" \
+            "https://www.programiz.com/ \n" \
+            "https://www.stackoverflow.com/ \n" \
+            "https://www.replit.com/ \n" \
+            "https://www.tutorialspoint.com/"
+
+DLSU="https://sso.canvaslms.com/login/canvas \n" \
+    "https://animo.sys.dlsu.edu.ph/psp/ps/EMPLOYEE/HRMS/?cmd=logout \n" \
+    "https://my.dlsu.edu.ph/ \n" \
+    "https://theconcierge.dlsu.edu.ph/support/home \n" \
+    "https://selfserv.dlsu.edu.ph:9251/authorization.do"
+
+Math="https://www.derivative-calculator.net/ \n" \
+    "https://www.integral-calculator.com/ \n" \
+    "https://www.desmos.com/ \n" \
+    "https://www.mathcha.io \n" \
+    "https://play.google.com/store/apps/details?id=cz.hipercalc"
+
+LLMS="chat.deepseek.com \n" \
+    "gemini.google.com \n" \
+    "chatgpt.com"
+
+YoutubeChannels="https://www.youtube.com/@TheOrganicChemistryTutor \n" \
+                "https://www.youtube.com/@3blue1brown \n" \
+                "https://www.youtube.com/@brianmclogan"
+    
+
+class select(discord.ui.Select): #the dropdown menu callbacks
+    def __init__(self):
+        options=[
+            discord.SelectOption(label="Programming", description="For websites related to programming"),
+            discord.SelectOption(label="DLSU Websites", description="For a list of common DLSU websites"),
+            discord.SelectOption(label="Math", description="For helpful websites for math"),
+            discord.SelectOption(label="Youtube Channels", description="For a list of helpful youtube channels"),
+            discord.SelectOption(label="Forbidden option", description="the quote on quote forbidden option")
+        ]
+        super().__init__(placeholder="What category of websites?", max_values=1, min_values=1, options=options)
+    async def callback(self, interaction:discord.Interaction):
+            if self.values[0]=="programming":
+                await interaction.response.send_message(programming)
+            elif self.values[0]=="DLSU Websites":
+                 await interaction.response.send_message(DLSU)
+            elif self.values[0]=="Math":
+                 await interaction.response.send_message(Math)
+            elif self.values[0]=="Youtube Channels":
+                 await interaction.response.send_message(YoutubeChannels)
+            else:
+                 await interaction.response.send_message(LLMS)
+
+class websitesbuttons(discord.ui.View): #the actual dropdown
+    def __init__(self, *, timeout=1800):
+        super().__init__(timeout=timeout)
+        self.add_item(select())
+
+
+@bot.tree.command(name="websites",description="a list of useful websites") #the command for the dropdown
+async def websites(interaction):
+     await interaction.response.send_message("What category of websites do you want to see?", view=websitesbuttons())
+
+
 										
 
 
