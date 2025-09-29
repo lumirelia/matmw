@@ -17,10 +17,10 @@
 ## Installation
 
 ### Cloning the files into your PC
-* You will only need to download 2 files to run the Discord bot
+* You will only need to use 2 files to run the Discord bot
   * ```mainfunction.py```
   * and ```.env```
-* You *may* manually download the two files mentioned above and put them in a folder
+* You *may* manually download the ```mainfunction.py``` file mentioned above and put them in a folder
 
 * **OR** you can run the following in your command terminal:
 ```
@@ -29,17 +29,18 @@ git clone https://github.com/rxmieowo/matmw
 > [!TIP]
 > If you have no experience with programming and don't know how to run the Python script: You can download python from [Python.org](https://www.python.org/) and search up guides on the internet on how to install it. You do not need to install other packages outside of the main Python library to use the bot, but if you somehow encounter an issue, please do let us know through the repo's [issue tab](https://github.com/rxmieowo/matmw/issues).
 
-### Creating a ".env" file *(optional)*
-##### *only do this step if the ```.env``` file does not work or if you are creating your own bot using the code from this repository* 
+### Creating a ".env" file 
 1. Create a ```.env``` file in the same folder that contains ```mainfunctions.py```
 2. Open the ```.env``` file
 3. Paste the following line into line 1:
 ```
 DISCORD_TOKEN = 'insert your discord app token here'
 ```
+> [!NOTE]
+> You will need to access your bot's discord app token through the [Discord Developer Portal](https://discord.com/developers/). Open Discord Dev Portal>Applications>[Your Bot]>Bot>Token>Reset Token. You can also check Discord's [Developer Documentation](https://discord.com/developers/docs/intro) for more info if you want to add more to the bot's code.
 4. Save the file
 
-### Running the Code
+## Running the Code
 * Assuming you already have done all the steps above, everything should work just fine.
 * Open the ```mainfunctions.py``` file and run it.
 * Go on the Discord server where the bot is, and start using any of the commands!
